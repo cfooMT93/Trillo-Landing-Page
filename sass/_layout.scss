@@ -11,7 +11,7 @@
     font-size: 1.4rem;
     height: 7rem;
     background-color: #fff;
-    border-bottom: var(--color-grey-light-2);
+    border-bottom: 1px solid var(--color-grey-light-2); // adds a line at bottom with (width, type, color)
 
     //flexbox for header elements
     display: flex;
@@ -40,7 +40,7 @@
     background-color: #fff;
 
     // test
-    background-color: orangered;
+    // background-color: orangered;
     height: 80rem;
 
     flex: 1; // occupy/grow in the entire space (entire row) -- 100% - 18% = 82% space occupied

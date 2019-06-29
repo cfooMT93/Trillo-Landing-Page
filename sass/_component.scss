@@ -1,10 +1,11 @@
 /////////////////////////////////////////////
+/////////////       HEADER       ////////////
+/////////////////////////////////////////////
 // LOGO
 .logo {
     height: 3.25rem;
     margin: 2rem; // applying a margin to the left side of logo without using flexbox properties
 }
-
 
 
 /////////////////////////////////////////////
@@ -68,7 +69,6 @@
 }
 
 
-
 /////////////////////////////////////////////
 // USER NAVIGATION
 .user-nav {
@@ -130,7 +130,9 @@
 
 
 /////////////////////////////////////////////
-// SIDE NAVIGATION
+///////////////    CONTENT     //////////////
+/////////////////////////////////////////////
+// SIDEBAR NAVIGATION
 .side-nav {
     font-size: 1.4rem;
     list-style: none;
@@ -198,6 +200,7 @@
     }
 }
 
+
 /////////////////////////////////////////////
 // LEGAL TEXT
 .legal {
@@ -207,9 +210,135 @@
     padding: 2.5rem;
 }
 
-/////////////////////////////////////////////
-// USER NAVIGATION
 
 /////////////////////////////////////////////
-// USER NAVIGATION
+// GALLERY
+.gallery {
+    display: flex;
 
+    &__photo {
+        width: 100%; // in responsive design, we always want flexible images so we always have to define a width or a height in percentages
+        display: block; // avoids having small space underneath an image when we leave it as an inline element; so this should always be a block or an inline-block 
+    }
+}
+
+
+/////////////////////////////////////////////
+// HOTEL OVERVIEW
+.overview {
+    display: flex; // aligns overview bar content into a row
+    align-items: center;
+    border-bottom: 1px solid var(--color-grey-light-2);
+
+    
+    &__heading {
+        font-size: 2.25rem;
+        font-weight: 300;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        padding: 1.5rem 3rem; // adds padding between the sidebar and star icons
+    }
+
+    &__stars {
+        // IDEAL METHOD/TRICK OF CREATING SPACE BETWEEN -- POWERFUL TOOL TO CREATE "SPACE BETWEEN" TWO ELEMENTS WITHOUT EXPANDING ONE OF THEIR WIDTHS OR OCCUPYING THE ENTIRE ROW/SPACE
+        margin-right: auto; // could also use margin-left: auto; for &__location{}
+        
+        display: flex; // aligns the stars within the element -- removes the space at the bottom of each star bc svg elements are considered text, therefore they get some spacing at the bottom like texts
+
+        // NOT IDEAL METHOD OF CREATING SPACE BETWEEN
+        // Creates the gap between star icons and the location icon -- NOT IDEAL TO USE THIS AS IT MAKES THE STAR ICONS STRETCH THEIR WIDTH
+        // background-color: orangered; // test to see the growth of stars
+        // flex: 1; // stars grow and take up the rest of the space from here to icon-star/location -- thus, creating the gap in between since justify-content: space-between won't allow it for only two of the four elements
+    }
+
+    &__icon-star,
+    &__icon-location {
+        //icon size continuity and these icons should be red/color-primary
+        width: 1.75rem; 
+        height: 1.75rem;
+        fill: var(--color-primary);
+    }
+
+    &__location {
+        font-size: 1.2rem;
+        display: flex;
+        align-items: center;
+    }
+
+    &__icon-location {
+        margin-right: .5rem; // creates margin between location icon & inline button
+    }
+
+    &__rating {
+        background-color: var(--color-primary);
+        color: #fff;
+        margin-left: 3rem;
+        padding: 0 2.25rem;
+        align-self: stretch; // overrides .overview { align-items: center; } and gives this __rating box its full height
+
+        // puts average & count in a column, aligned to the center
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+    }
+
+    &__rating-average {
+        font-size: 2.25rem;
+        font-weight: 300;
+        margin-bottom: -3px; // decreases space between rating average & count
+    }
+
+    &__rating-count {
+        font-size: .8rem;
+        text-transform: uppercase;
+    }
+}
+
+
+/////////////////////////////////////////////
+// BUTTON INLINE - this element is independent of .overview because it will be used again later
+.btn-inline {
+    border: none; // we never want the border
+    color: var(--color-primary);
+    font-size: inherit; // since we're using this element in multiple parent elements, we'll be having different font sizes for each of those, thus we can state here for this inline button to inherit that parent element's font-size
+    border-bottom: 1px solid currentColor; // current color w/o hover: var(--color-primary) && currentcolor w/ hover var(--color-grey-dark-1)
+    padding-bottom: 2px;
+    display: inline-block;
+    background-color: transparent; // we're reussing this button on different parent elements that will have different background colors, so we do not want to attribute a different color everytime here--therefore making it transparent
+    cursor: pointer;
+    transition: all .2s;
+
+    &:hover {
+        color: var(--color-grey-dark-1); // changes color of TEXT && BORDER when hovered; this is due to "currentColor" property for border
+    }
+
+    &:focus { // when clicked
+        outline: none; // never want the default blue border
+
+        // infinite animation -- @keyframes pulsate
+        animation: pulsate 1s infinite;
+    }
+}
+
+
+// Pulsating infinite animation -- used as 'animation: pulsate 1s infinite;' in .btn-inline:focus {}
+@keyframes pulsate {
+    // initial state
+    0% {
+        transform: scale(1);
+        box-shadow: none;
+    }
+
+    // middle state - it scales up
+    50% {
+        transform: scale(1.05);
+        box-shadow: 0 1rem 4rem rgba(0,0,0,.25);
+    }
+    
+    // end state - it scales back down to initial state
+    100% {
+        transform: scale(1);
+        box-shadow: none;
+    }
+}
