@@ -11,7 +11,7 @@
     font-size: 1.4rem;
     height: 7rem;
     background-color: #fff;
-    border-bottom: 1px solid var(--color-grey-light-2); // adds a line at bottom with (width, type, color)
+    border-bottom: var(--line); // adds a line at bottom with (width, type, color)
 
     //flexbox for header elements
     display: flex;
@@ -41,7 +41,35 @@
 
     // test
     // background-color: orangered;
-    height: 80rem;
+    // height: 80rem; // removed for detail container to have its actual height; used only for testing the other layouts
 
     flex: 1; // occupy/grow in the entire space (entire row) -- 100% - 18% = 82% space occupied
+}
+
+.detail {
+    font-size: 1.4rem;
+    display: flex;
+    padding: 4.5rem; // adds padding/margin on top & bottom -- no need for the sides since we have margin-righ:4.5rem already from the description box
+    background-color: var(--color-grey-light-1);
+    border-bottom: var(--line);
+}
+
+.description {
+    // font-size: 1.4rem; // instead of having this on .user-reviews AND .description, we can add it to the parent -- .detail{}
+    box-shadow: var(--shadow-light); // box shadow around description box (not the detail container)
+    padding: 3rem;
+    flex: 0 0 60%; // occupy 60% of the space
+    margin-right: 4.5rem; // adds space between description container and user-reviews container
+}
+
+.user-reviews {
+    // background-color: yellowgreen;
+    // font-size: 1.4rem; // instead of having this on .user-reviews AND .description, we can add it to the parent -- .detail{}
+
+    flex: 1; // occupy the rest of the space, 40%
+
+    // centering the 'show all' inline button along with the user review containers without using text-align; if we use text-align then it will also align our users text quotes as well which is something we dont want
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
