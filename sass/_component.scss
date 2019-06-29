@@ -4,7 +4,7 @@
 // LOGO
 .logo {
     height: 3.25rem;
-    margin: 2rem; // applying a margin to the left side of logo without using flexbox properties
+    margin-left: 2rem; // applying a margin to the left side of logo without using flexbox properties
 }
 
 
@@ -17,6 +17,12 @@
     display: flex; // aligns searchbox with search icon
     align-items: center; // aligns along y-axis (cross-axis)
     justify-content: center; // aligns along x-axis (main-axis)
+
+    @media only screen and (max-width: $bp-smallest) {
+        order: 1; // sets the searchbar to be last bc the default order of all flex items is 0
+        flex: 0 0 100%; // sets searchbar to occupy 100% width
+        background-color: var(--color-grey-light-2); // searchbar was uncentered and its rounded edges didnt look clean for the look, so this makes the entire searchbar row the same color with a cleaner look
+    }
 
     &__input {
         font-family: inherit; // input doesn't automatically inherit font-family of the global document, so we must restate that here
@@ -137,6 +143,11 @@
     font-size: 1.4rem;
     list-style: none;
     margin-top: 3.5rem;
+
+    @media only screen and (max-width: $bp-medium) {
+        display: flex; // displays the navi bar buttons side by side @ 900px or $bp-medium
+        margin: 0; // removes top margin to make the buttons look cleaner as you scroll
+    }
     
     &__item {
         position: relative;
@@ -144,6 +155,14 @@
         // applies margin to all children of &__item except the last child
         &:not(:last-child) {
             margin-bottom: .5rem;
+
+            @media only screen and (max-width: $bp-medium) {
+                margin-bottom: 0; // removes bottom margin @ 900px breakpoint for a cleaner look
+            }
+        }
+
+        @media only screen and (max-width: $bp-medium) {
+            flex: 1; // makes navi buttons occupy entire row
         }
     }
 
@@ -190,6 +209,15 @@
         display: flex;
         align-items: center; // centers icons and text vertically
         
+        @media only screen and (max-width: $bp-medium) {
+            justify-content: center;
+            padding: 2rem;
+        }
+
+        @media only screen and (max-width: $bp-small) {
+            flex-direction: column; // aligns icon on top of text link
+            padding: 1.5rem .5rem; // reduces the padding on the link so that the nav box is smaller
+        }
     }
 
     &__icon {
@@ -197,6 +225,13 @@
         height: 1.75rem;
         margin-right: 2rem;
         fill: currentColor; // currentColor uses the current color of the current element OR the parent element which is &__link
+
+        @media only screen and (max-width: $bp-small) {
+            margin-right: 0; // centers the icon, since it had 2rem to the right margin
+            margin-bottom: .7rem;
+            width: 1.5rem;
+            height: 1.5rem;
+        }
     }
 }
 
@@ -208,6 +243,10 @@
     color: var(--color-grey-light-4);
     text-align: center;
     padding: 2.5rem;
+
+    @media only screen and (max-width: $bp-medium) {
+        display: none;
+    }
 }
 
 
@@ -237,6 +276,11 @@
         text-transform: uppercase;
         letter-spacing: 1px;
         padding: 1.5rem 3rem; // adds padding between the sidebar and star icons
+
+        @media only screen and (max-width: $bp-small) {
+            font-size: 1.8rem;
+            padding: 1.25rem 2rem;
+        }
     }
 
     &__stars {
@@ -281,17 +325,29 @@
         flex-direction: column;
         align-items: center;
         justify-content: center;
+
+        @media only screen and (max-width: $bp-small) {
+            padding: 0 1.5rem;
+        }
     }
 
     &__rating-average {
         font-size: 2.25rem;
         font-weight: 300;
         margin-bottom: -3px; // decreases space between rating average & count
+
+        @media only screen and (max-width: $bp-small) {
+            font-size: 1.8rem;
+        }
     }
 
     &__rating-count {
         font-size: .8rem;
         text-transform: uppercase;
+
+        @media only screen and (max-width: $bp-small) {
+            font-size: .5rem;
+        }
     }
 }
 
@@ -396,16 +452,20 @@
         /////////////////////////////////////////////
 
         // METHOD 1 - OLDER BROWSERS - BG-IMG -- you can't change the icon color using this method -- if you are okay with that then use this method
-        // background-image: url(../img/chevron-thin-right.svg); // we go up one level bc we technically start from css/style.css
-        // background-size: cover;
+        // in regards to @supports below for method 2, if browsers don't support those properties with or without webkits, then this CSS will apply
+        background-image: url(../img/chevron-thin-right.svg); // we go up one level bc we technically start from css/style.css
+        background-size: cover;
 
 
         // METHOD 2 - NEWER BROWSERS - MASKS - 1) bg-color = solid color && 2) icon will be the mask -- peripheral: you're looking thru the icon-shape to see the bg color
-        background-color: var(--color-primary); // icon color
-        -webkit-mask-image: url(../img/chevron-thin-right.svg); // icon shape
-        -webkit-mask-size: cover; // we use mask size instead of background-size 
-        mask-image: url(../img/chevron-thin-right.svg);
-        mask-size: cover;
+        @supports (-webkit-mask-image: url()) or (mask-image: url()) { // apply this mask property if the browser supports it with or without webkit, if not --> apply the old browser version from method 1
+            background-color: var(--color-primary); // icon color
+            -webkit-mask-image: url(../img/chevron-thin-right.svg); // icon shape
+            -webkit-mask-size: cover; // we use mask size instead of background-size 
+            mask-image: url(../img/chevron-thin-right.svg);
+            mask-size: cover;
+            background-image: none; // this removes the background image from method 1 (which turns the icon black) if the browser supports this property. we have to do this else chrome will apply this css AND the bg-img from method 1
+        }
     }
 }
 
@@ -424,7 +484,7 @@
     }
 
     &__friends {
-
+        display: flex; // fix for not having to write so many media queries to fix the photos from not displaying side by side
     }
 
     &__photo {
@@ -440,7 +500,7 @@
                                   // solution 2 - manually add it to height/width: height: 4.3rem; width: 4.3rem;
 
         &:not(:last-child) {
-            margin-right: -1.5rem; // moves all images except the last towards the right -- allowing overlap
+            margin-right: -2rem; // moves all images except the last towards the right -- allowing overlap
         }
     }
 }
@@ -456,6 +516,10 @@
     position: relative;
     overflow: hidden; // fixes the problem where the quote would extend out of the review container
     
+    @media only screen and (max-width: $bp-medium) {
+        padding: 2rem;
+        margin-bottom: 3rem;
+    }
 
     &__text {
         margin-bottom: 2rem;
@@ -516,8 +580,12 @@
 /////////////////////////////////////////////
 // CALL TO ACTION
 .cta {
-    padding: 3.5rem 00;
+    padding: 3.5rem 0;
     text-align: center; // centers h2 element and button
+
+    @media only screen and (max-width: $bp-medium) {
+        padding: 2.5rem 0;
+    }
 
     &__book-now {
         font-size: 2rem;

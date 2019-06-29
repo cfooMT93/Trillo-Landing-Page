@@ -5,6 +5,13 @@
     box-shadow: var(--shadow-dark);
 
     min-height: 50rem; // testing purposes
+
+    @media only screen and (max-width: $bp-largest) {
+        margin: 0;
+        max-width: 100%;
+        width: 100%;
+        height: 100%;
+    }
 }
 
 .header {
@@ -17,11 +24,20 @@
     display: flex;
     justify-content: space-between; // aligns elements along X-axis (main-axis) with space between each element |1-------2-------3|
     align-items: center; // centers items along Y-axis (cross-axis)
+
+    @media only screen and (max-width: $bp-smallest) {
+        flex-wrap: wrap; // used with order: 1; for searchbar, this moves the searchbar to its own row
+        align-content: space-around; // adds space between rows
+        height: 11rem; // gives more space for the header content
+    }
 }
 
 .content {
     display: flex;
 
+    @media only screen and (max-width: $bp-medium) {
+        flex-direction: column;
+    }
 }
 
 .sidebar {
@@ -52,6 +68,14 @@
     padding: 4.5rem; // adds padding/margin on top & bottom -- no need for the sides since we have margin-righ:4.5rem already from the description box
     background-color: var(--color-grey-light-1);
     border-bottom: var(--line);
+
+    @media only screen and (max-width: $bp-medium) {
+        padding: 3rem;
+    }
+
+    @media only screen and (max-width: $bp-small) {
+        flex-direction: column;
+    }
 }
 
 .description {
@@ -60,6 +84,16 @@
     padding: 3rem;
     flex: 0 0 60%; // occupy 60% of the space
     margin-right: 4.5rem; // adds space between description container and user-reviews container
+
+    @media only screen and (max-width: $bp-medium) {
+        padding: 2rem;
+        margin-right: 3rem;
+    }
+
+    @media only screen and (max-width: $bp-small) {
+        margin-right: 0;
+        margin-bottom: 3rem;
+    }
 }
 
 .user-reviews {

@@ -19,6 +19,13 @@
     --line: 1px solid var(--color-grey-light-2); // variable line that contains another variable -- this is ok
 }
 
+//MEDIA QUERY SASS VARIABLES BREAKPOINTS
+$bp-largest: 75em;   // @1200px/16px = 75em (NOT REM IF USING MEDIA QUERIES)
+$bp-large: 68.75em;  // @1100px/16px = 68.75em (problems at this breakpoint: list items start wrapping onto a new line which is not ideal, so we're going to change the global font size at this breakpoint--global font-size is in the _base.scss html{}
+$bp-medium: 56.25em; // @900px/16px = 56.25em (problems at this breakpoint: content becomes too narrow, so we want to fix this by moving the sidebar navi to be at the top within the content container
+$bp-small: 37.5em;   // @600px/16px = 37.5em (problems at this breakpoint: we need more space! flex the detail & review containers to column in order to occupy 100% of the height and width for small devices
+$bp-smallest: 31.25em; // @500px/16px = 31.25em (problems at this breakpoint: our header is cramped so we need to move the search bar to be its own row
+
 //global reset
 * {
     margin: 0;
@@ -35,6 +42,10 @@
 html {
     box-sizing: border-box;
     font-size: 62.5%; // 1rem = 10px, calculation reminder: 10px/16px = 62.5% --whereas 16px is default font-size 
+
+    @media only screen and (max-width: $bp-large) {
+        font-size: 50%; // here we want to make the global font size = 8px; to calculate that, 8px/16px = 50%
+    }
 }
 
 body {
