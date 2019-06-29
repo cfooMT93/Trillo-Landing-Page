@@ -1,0 +1,215 @@
+/////////////////////////////////////////////
+// LOGO
+.logo {
+    height: 3.25rem;
+    margin: 2rem; // applying a margin to the left side of logo without using flexbox properties
+}
+
+
+
+/////////////////////////////////////////////
+// SEARCH
+.search {
+    flex: 0 0 40%; // searchbar will occupy 40% of header space without shrinking/growing
+
+    // aligns searchbox to center so that when the searchbox is active, it stretches to 100% evenly on both side instead of stretching towards one side
+    display: flex; // aligns searchbox with search icon
+    align-items: center; // aligns along y-axis (cross-axis)
+    justify-content: center; // aligns along x-axis (main-axis)
+
+    &__input {
+        font-family: inherit; // input doesn't automatically inherit font-family of the global document, so we must restate that here
+        font-size: inherit;
+        color: inherit;
+        background-color: var(--color-grey-light-2);
+        border: none;
+        padding: .7rem 2rem;
+        border-radius: 100px; // gives rounded edges to search input box -- number can be any high number
+        width: 90%; // not using 100% bc we'll be making this searchbox have an animation which expands it from 90% to 100% when user clicks it
+        transition: all .2s; // smoothes the animation stretch from 90% to 100% by .2s
+        margin-right: -3.25rem; // removes margin "gap" between input box and search icon to allow the search icon to be on top of searchbox
+
+        &:focus { // focused = when it is clicked on (not hovered)
+            outline: none; // removes blue outline when input box is focused
+            width: 100%; // searchbox stretches to 100% when focused
+            background-color: var(--color-grey-light-3); // searchbox turns darker when focused
+        }
+
+        // PLACEHOLDER TEXT - changes the font-weight & color 
+        &::-webkit-input-placeholder {
+            font-weight: 100;
+            color: var(--color-grey-light-4); 
+        }
+    }
+
+    // selects ONLY the button that is adjacent to the search__input element -- in this case, the search icon button is selected and set to have the same bg color as search__input
+    &__input:focus + &__button {
+        background-color: var(--color-grey-light-3); // same bg-color as search__input:focus {}
+    }
+
+    &__button {
+        border: none;
+        background-color: var(--color-grey-light-2); // same color as the input searchbox to look like it's on top of it
+
+        &:focus {
+            outline: none;
+        }
+
+        &:active {
+            transform: translateY(2px); // search icon moves down 2px when clicked
+        }
+    }
+
+    &__icon {
+        height: 2rem;
+        width: 2rem;
+        fill: var(--color-grey-dark-3); // changes ICON COLOR 
+    }
+}
+
+
+
+/////////////////////////////////////////////
+// USER NAVIGATION
+.user-nav {
+    align-self: stretch; // overrides the align-items: center in the header in order to fill the y-axis height
+    display: flex;
+    align-items: center;
+    
+    // selects all children of .user-nav
+    & > * {
+        padding: 0 2rem; // adds padding to the icon box
+        cursor: pointer;
+        height: 100%; // allows for the height of changes to :hover to fill the entire height -- in this case, the hover bg color; but now the icon-box is aligned to the top
+
+        // aligns items in the icon-box to the center -- this is a fix for the height: 100% property
+        display: flex;
+        align-items: center;
+    }
+
+    // selects all children of .user-nav when hovered
+    & > *:hover {
+        background-color: var(--color-grey-light-2);
+    }
+
+    &__icon-box {
+        position: relative; // parent of __notification -- used for absolute position
+    }
+
+    &__icon {
+        height: 2.25rem;
+        width: 2.25rem;
+        fill: var(--color-grey-dark-2);
+    }
+
+    &__notification {
+        font-size: .8rem;
+        height: 1.75rem;
+        width: 1.75rem;
+        border-radius: 50%; 
+        background-color: var(--color-primary);
+        color: #fff;
+
+        //flexbox can't position this notification number exactly where we want it, so we have to use absolute positioning
+        position: absolute; // parent element is __icon-box
+        top: 1.5rem;
+        right: 1.1rem;
+
+        //centers text numbers within the notification bubble
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    &__user-photo {
+        height: 3.75rem;
+        border-radius: 50%;
+        margin-right: 1rem;
+    }
+}
+
+
+/////////////////////////////////////////////
+// SIDE NAVIGATION
+.side-nav {
+    font-size: 1.4rem;
+    list-style: none;
+    margin-top: 3.5rem;
+    
+    &__item {
+        position: relative;
+
+        // applies margin to all children of &__item except the last child
+        &:not(:last-child) {
+            margin-bottom: .5rem;
+        }
+    }
+
+    // creates a line on the side of each button 
+    &__item:before {
+        content: ""; // content is always specified for :before pseudo element to work
+        position: absolute; // parent element is &__item
+        top: 0;
+        left: 0;
+        height: 100%;
+        width: 3px;
+        background-color: var(--color-primary);
+        transform: scaleY(0); // initial state of the line
+        // transform-origin: bottom; // this will start scaling at the bottom
+        transition: transform .2s,
+                    width .4s cubic-bezier(1, 0, 0, 1) .2s, // width stretches over .4s and starts after a .2s delay (which is after the transform animation happens)
+                    background-color .1s; // animates bg-color in .1s
+    }
+    // when hovered, this effect takes place BEFORE the hover effect -- so when you hover, short line on side appears then the hover style takes effect
+    &__item:hover::before,
+    &__item--active::before { // apply this to the --active modifier with this ::before css
+        transform: scaleY(1); // makes the line grow from the center and towards the top and bottom (aka the Y-direction)
+
+        width: 100%; // stretches the "line" width to 100%
+    }
+
+    &__item:active::before {
+        background-color: var(--color-primary-light); // animation: changes item bg color when clicked on
+    }
+
+    // :link styles the anchor links that hasn't been visited && :visited styles anchor links that has been visited
+    &__link:link,
+    &__link:visited {
+        color: var(--color-grey-light-1);
+        text-decoration: none;
+        text-transform: uppercase;
+        display: block;
+        padding: 1.5rem 3rem;
+        
+        // sets links to be in front of the animations; z-index doesns't work unless we specify the position of the element
+        position: relative;
+        z-index: 10;
+
+        display: flex;
+        align-items: center; // centers icons and text vertically
+        
+    }
+
+    &__icon {
+        width: 1.75rem;
+        height: 1.75rem;
+        margin-right: 2rem;
+        fill: currentColor; // currentColor uses the current color of the current element OR the parent element which is &__link
+    }
+}
+
+/////////////////////////////////////////////
+// LEGAL TEXT
+.legal {
+    font-size: 1.2rem;
+    color: var(--color-grey-light-4);
+    text-align: center;
+    padding: 2.5rem;
+}
+
+/////////////////////////////////////////////
+// USER NAVIGATION
+
+/////////////////////////////////////////////
+// USER NAVIGATION
+

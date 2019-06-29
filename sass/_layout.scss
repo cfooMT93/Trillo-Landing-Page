@@ -1,0 +1,47 @@
+.container {
+    max-width: 120rem; // use max-width so container can decrease/shrink if theres not enough space to display our 120rem aka 1200px; if the viewport is less than 1200px then we occupy 100% of the available viewport width  
+    margin: 8rem auto; // centers the container inside its parent element <body>
+    background-color: var(--color-grey-light-1);
+    box-shadow: var(--shadow-dark);
+
+    min-height: 50rem; // testing purposes
+}
+
+.header {
+    font-size: 1.4rem;
+    height: 7rem;
+    background-color: #fff;
+    border-bottom: var(--color-grey-light-2);
+
+    //flexbox for header elements
+    display: flex;
+    justify-content: space-between; // aligns elements along X-axis (main-axis) with space between each element |1-------2-------3|
+    align-items: center; // centers items along Y-axis (cross-axis)
+}
+
+.content {
+    display: flex;
+
+}
+
+.sidebar {
+    background-color: var(--color-grey-dark-1);
+
+    flex: 0 0 18%; // grow (integer), shrink (integer), basis (length--% or px); these values mean we don't want the element to grow if theres space, nor shrink if there's not enough space, but we always want to keep it at 18%; Since it's a %-percentage, it's okay to say we don't want it to shrink because it will automatically shrink bc its a %value; Lecture 74@10:20min
+
+    // use flex to change the items (icons/text and legal text) main axis to vertical by using flex-direction: column
+    // this will now allow you to justify-content: space-between vertically -- icons at the top, legal text at the bottom
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.hotel-view {
+    background-color: #fff;
+
+    // test
+    background-color: orangered;
+    height: 80rem;
+
+    flex: 1; // occupy/grow in the entire space (entire row) -- 100% - 18% = 82% space occupied
+}
